@@ -11,15 +11,15 @@ typedef struct Stu
 
 int main()
 {
-    Stu s={"Å·Ñô³çÖÎ",18,"213200554","ÄĞ"};
-    printf("ĞÕÃû£º%s\n",s.name);
-    printf("ÄêÁä£º%d\n",s.age);
-    printf("Ñ§ºÅ£º%s\n",s.id);
-    printf("ĞÔ±ğ£º%s\n",s.sex);
+    Stu s={"å¼ ä¸‰",18,"213200555","ç”·"};
+    printf("å§“åï¼š%s\n",s.name);
+    printf("å¹´é¾„ï¼š%d\n",s.age);
+    printf("å­¦å·ï¼š%s\n",s.id);
+    printf("æ€§åˆ«ï¼š%s\n",s.sex);
     printf("\n\n");
-    printf("s£º%p\n",s);
-    printf("ĞÕÃû£º%p\n",s.name);
-    printf("ÄêÁä£º%p\n",s.age);
-    printf("Ñ§ºÅ£º%p\n",s.id);
-    printf("ĞÔ±ğ£º%p\n",s.sex);
+    printf("sï¼š%p\n",s);
+    printf("å§“åï¼š%p\n",s.name);
+    printf("å¹´é¾„ï¼š%p\n",s.age);
+    printf("å­¦å·ï¼š%p\n",s.id);
+    printf("æ€§åˆ«ï¼š%p\n",s.sex);
 }
