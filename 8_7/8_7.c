@@ -1,4 +1,4 @@
-// #include <stdio.h>
+#include <stdio.h>
 
 // // int main()
 // // {
@@ -63,11 +63,11 @@
 // //     return 0;
 // // }
 
-// //
-// // 左旋字符串中的k个字符
+//
+// 左旋字符串中的k个字符
 
-// #include <assert.h>
-// #include <string.h>
+#include <assert.h>
+#include <string.h>
 
 // // 暴力求解法
 // // void left_move(char *arr, int n)
@@ -87,10 +87,6 @@
 // //         *(arr + len - 1) = tmp;
 // //     }
 // // }
-// //三步翻转法
-// // abcdef
-// // bafedc 分别翻转两边
-// // cdefab 总体再翻转
 
 // void reverse(char *left, char *right)
 // {
@@ -106,6 +102,10 @@
 //     }
 // }
 
+// //三步翻转法
+// // abcdef
+// // bafedc 分别翻转两边
+// // cdefab 总体再翻转
 // void left_move(char *arr, int n)
 // {
 //     assert(arr);
@@ -115,19 +115,52 @@
 //     reverse(arr, arr + len - 1);     //逆序整体
 // }
 
+// // int is_left_move(char *s1, char *s2)
+// // {
+// //     int len = strlen(s1);
+// //     int i = 0;
+// //     for (i = 0; i < len; i++)
+// //     {
+// //         left_move(s1, 1);
+// //         if (!strcmp(s1, s2))
+// //         {
+// //             return 1;
+// //         }
+// //     }
+// //     return 0;
+// // }
+
+// // 比较abcdef与cdefab是否为旋转后的字符串
+// //先将abcdef延长变为abcdefabcdef
+// //再将cdefab和延长后的字符串abcdefabcdef作比较，不相同则向后移动一位，找到匹配的则return 1；若一直重复本身字符串长度次数后，仍未找到则return 0；
 // int is_left_move(char *s1, char *s2)
 // {
-//     int len = strlen(s1);
-//     int i = 0;
-//     for (i = 0; i < len; i++)
+//     int len1 = strlen(s1);
+//     int len2 = strlen(s2);
+//     //两字符串长度不等一定不会是左移得来的
+//     if (len1 != len2)
 //     {
-//         left_move(s1, 1);
-//         if (!strcmp(s1, s2))
-//         {
-//             return 1;
-//         }
+//         return 0;
 //     }
-//     return 0;
+//     // 1.字符串s1后追加一个s1
+//     // strcat 不能用于字符串自己给自己追加
+//     // strcat(s1,s1);error  char* strcat(char* strDestination,const char* strSourse)
+
+//     // strncat
+//     // strncat(s1,s1);  char* strcat(char* strDestination,const char* strSourse,size_t count)//追加count个字符
+//     strncat(s1, s1, len1);
+
+//     // 2.判断s2是否为s1指向字符串的子串
+//     // strstr 找子串，找到返回地址，没找到返回空指针
+//     char *ret = strstr(s1, s2);
+//     if (ret == NULL)
+//     {
+//         return 0;
+//     }
+//     else
+//     {
+//         return 1;
+//     }
 // }
 
 // // int main()
@@ -140,16 +173,86 @@
 
 // int main()
 // {
-//     char arr1[] = "abcdef";
-//     char arr2[] = "cdefac";
-//     if(is_left_move(arr1, arr2))
+//     char arr1[30] = "abcdef";
+//     char arr2[] = "cdef";
+//     if (is_left_move(arr1, arr2))
 //     {
 //         printf("arr1 是 arr2 左移后的字符串\n");
 //     }
 //     else
 //     {
 //         printf("arr1 不是 arr2 左移后的字符串\n");
-
 //     }
 //     return 0;
 // }
+
+//有一个数字矩阵，矩阵每一行从左往右递增，矩阵每一列从上往下递增，
+//请编写程序在这样的矩阵查找某个数字是否存在
+//时间复杂度小于O(n);
+
+// int find_num(int arr[3][3], int k, int row, int col)
+// {
+//     int x = 0;
+//     int y = col - 1;
+//     while (x <= row - 1 && y >= 0)
+//     {
+//         if (arr[x][y] > k)
+//         {
+//             y--;
+//         }
+//         else if (arr[x][y] < k)
+//         {
+//             x++;
+//         }
+//         else
+//         {
+//             return 1;
+//         }
+//     }
+//     //找不到
+//     return 0;
+// }
+
+//找到时可返回坐标
+int find_num(int arr[3][3], int k, int *row, int *col)
+{
+    int x = 0;
+    int y = *col - 1;
+    while (x <= *row - 1 && y >= 0)
+    {
+        if (arr[x][y] > k)
+        {
+            y--;
+        }
+        else if (arr[x][y] < k)
+        {
+            x++;
+        }
+        else
+        {
+            *row = x;
+            *col = y;
+            return 1;
+        }
+    }
+    //找不到
+    return 0;
+}
+
+int main()
+{
+    int arr[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    int k = 9; //要寻找的元素
+    int row = 3;
+    int col = 3;
+    int ret = find_num(arr, k, &row, &col);
+    if (1 == ret)
+    {
+        printf("找到了,坐标为(%d,%d)\n", row, col);
+    }
+    else
+    {
+        printf("找不到\n");
+    }
+    return 0;
+}
